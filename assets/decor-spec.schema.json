@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Wedding decor blueprint poster specification",
+  "description": "Use validate_spec.py to validate the complete JSON file. The command-line validator also rejects duplicate keys and non-JSON numeric tokens, requires integer token forms for schema_version and step numbers, and checks ascending aisle endpoints. Standard JSON Schema cannot express those checks.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "language",
+    "theme",
+    "subtitle_elements",
+    "labels",
+    "views",
+    "dimensions",
+    "materials",
+    "components",
+    "steps"
+  ],
+  "properties": {
+    "schema_version": {"type": "integer", "const": 1},
+    "language": {
+      "$ref": "#/$defs/posterText",
+      "maxLength": 35,
+      "pattern": "^(?:[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*|[xXiI](?:-[A-Za-z0-9]{1,8})+)$",
+      "description": "Use a language tag such as zh-CN or en. Validation checks the tag shape without looking it up in the language subtag registry."
+    },
+    "theme": {"$ref": "#/$defs/posterText", "maxLength": 96},
+    "brand_name": {"$ref": "#/$defs/nullablePosterText", "maxLength": 48},
+    "palette": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["accent"],
+      "properties": {
+        "accent": {"$ref": "#/$defs/posterText", "maxLength": 7, "pattern": "^#[A-Fa-f0-9]{6}$"}
+      }
+    },
+    "subtitle_elements": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/posterText", "maxLength": 24}
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title_suffix",
+        "materials",
+        "material_name",
+        "material_detail",
+        "components",
+        "steps",
+        "pending_measurement",
+        "missing_asset",
+        "disclaimer"
+      ],
+      "properties": {
+        "title_suffix": {"$ref": "#/$defs/posterText", "maxLength": 42},
+        "materials": {"$ref": "#/$defs/posterText", "maxLength": 28},
+        "material_name": {"$ref": "#/$defs/posterText", "maxLength": 20},
+        "material_detail": {"$ref": "#/$defs/posterText", "maxLength": 26},
+        "components": {"$ref": "#/$defs/posterText", "maxLength": 32},
+        "steps": {"$ref": "#/$defs/posterText", "maxLength": 32},
+        "pending_measurement": {"$ref": "#/$defs/posterText", "maxLength": 16},
+        "missing_asset": {"$ref": "#/$defs/posterText", "maxLength": 22},
+        "disclaimer": {"$ref": "#/$defs/posterText", "maxLength": 100}
+      }
+    },
+    "views": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["elevation", "plan"],
+      "properties": {
+        "elevation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["heading", "prompt_detail"],
+          "properties": {
+            "heading": {"$ref": "#/$defs/posterText", "maxLength": 32},
+            "prompt_detail": {"$ref": "#/$defs/visualPrompt", "maxLength": 480}
+          }
+        },
+        "plan": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["heading", "prompt_detail"],
+          "properties": {
+            "heading": {"$ref": "#/$defs/posterText", "maxLength": 32},
+            "prompt_detail": {"$ref": "#/$defs/visualPrompt", "maxLength": 480},
+            "aisle_span": {
+              "description": "Measured or visually supported [left, right] positions along the plan width. Values range from 0 to 1 and must increase strictly. Use null or omit the field for the renderer's default placement.",
+              "anyOf": [
+                {"type": "null"},
+                {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "items": {"type": "number", "minimum": 0, "maximum": 1}
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["H", "W", "D", "A"],
+      "properties": {
+        "H": {"$ref": "#/$defs/dimension"},
+        "W": {"$ref": "#/$defs/dimension"},
+        "D": {"$ref": "#/$defs/dimension"},
+        "A": {"$ref": "#/$defs/dimension"}
+      }
+    },
+    "materials": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "detail"],
+        "properties": {
+          "name": {"$ref": "#/$defs/posterText", "maxLength": 24},
+          "detail": {"$ref": "#/$defs/posterText", "maxLength": 48}
+        }
+      }
+    },
+    "components": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "prompt_detail"],
+        "properties": {
+          "name": {"$ref": "#/$defs/posterText", "maxLength": 24},
+          "prompt_detail": {"$ref": "#/$defs/visualPrompt", "maxLength": 300}
+        }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "prefixItems": [
+        {"$ref": "#/$defs/step", "properties": {"number": {"const": 1}}},
+        {"$ref": "#/$defs/step", "properties": {"number": {"const": 2}}},
+        {"$ref": "#/$defs/step", "properties": {"number": {"const": 3}}},
+        {"$ref": "#/$defs/step", "properties": {"number": {"const": 4}}},
+        {"$ref": "#/$defs/step", "properties": {"number": {"const": 5}}}
+      ],
+      "items": false
+    }
+  },
+  "$defs": {
+    "posterText": {
+      "description": "Single-line text with no leading or trailing whitespace, control characters, or unpaired surrogates.",
+      "type": "string",
+      "minLength": 1,
+      "allOf": [
+        {"not": {"pattern": "[\\u0000-\\u001F\\u007F-\\u009F\\u2028\\u2029]"}},
+        {"not": {"pattern": "^[ \\u00A0\\u1680\\u2000-\\u200A\\u202F\\u205F\\u3000]|[ \\u00A0\\u1680\\u2000-\\u200A\\u202F\\u205F\\u3000]$"}},
+        {"not": {"pattern": "[\\uD800-\\uDBFF](?![\\uDC00-\\uDFFF])|(?:^|[^\\uD800-\\uDBFF])[\\uDC00-\\uDFFF]"}}
+      ]
+    },
+    "nullablePosterText": {
+      "anyOf": [{"$ref": "#/$defs/posterText"}, {"type": "null"}]
+    },
+    "visualPrompt": {
+      "$ref": "#/$defs/nullablePosterText",
+      "description": "Use null to mark an illustration that needs a placeholder."
+    },
+    "dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "value"],
+      "properties": {
+        "label": {"$ref": "#/$defs/posterText", "maxLength": 20},
+        "value": {
+          "$ref": "#/$defs/nullablePosterText",
+          "maxLength": 24,
+          "pattern": "^(?=[0-9.]*[1-9])(?:[0-9]+(?:\\.[0-9]+)?|\\.[0-9]+)[ \\u00A0\\u1680\\u2000-\\u200A\\u202F\\u205F\\u3000]*(?:mm|cm|m|in|ft|毫米|厘米|公分|米|英寸|英尺)$",
+          "description": "Enter a confirmed positive measurement with a decimal point when needed and one of m, cm, mm, in, ft, 米, 厘米, 公分, 毫米, 英寸 or 英尺. Use null when the measurement is pending."
+        }
+      }
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["number", "name", "description", "prompt_detail"],
+      "properties": {
+        "number": {"type": "integer"},
+        "name": {"$ref": "#/$defs/posterText", "maxLength": 24},
+        "description": {"$ref": "#/$defs/posterText", "maxLength": 54},
+        "prompt_detail": {"$ref": "#/$defs/visualPrompt", "maxLength": 480}
+      }
+    }
+  }
+}
