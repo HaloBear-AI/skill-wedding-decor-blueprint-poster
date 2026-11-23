@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "language": "zh-CN",
+  "theme": "雾野初晴",
+  "brand_name": null,
+  "palette": {
+    "accent": "#405642"
+  },
+  "subtitle_elements": [
+    "草坪仪式",
+    "象牙弧门",
+    "暖杏花艺"
+  ],
+  "labels": {
+    "title_suffix": "婚礼布置工程示意图",
+    "materials": "主要物料",
+    "material_name": "组件",
+    "material_detail": "配置说明",
+    "components": "主要组件示意",
+    "steps": "布置顺序示意",
+    "pending_measurement": "待实测",
+    "missing_asset": "待补图",
+    "disclaimer": "示意图，非施工图，尺寸以现场实测为准"
+  },
+  "views": {
+    "elevation": {
+      "heading": "正立面示意",
+      "prompt_detail": "从通道正面看象牙白椭圆地台和中央开口弧门。浅杏布幔沿弧门内侧右肩垂下，左侧簇花从地台长出，右侧短圆柱花器托起较低花簇。保留弧门中间通透。"
+    },
+    "plan": {
+      "heading": "平面布置示意",
+      "prompt_detail": "俯视示意。矩形浅橄榄绿草坪内的椭圆地台位于上部，弧门横向落在地台后半部，左侧地花和右侧圆形花器各在门柱前。象牙白直通道由画面底边连到地台中央。",
+      "aisle_span": [
+        0.39,
+        0.61
+      ]
+    }
+  },
+  "dimensions": {
+    "H": {
+      "label": "总高",
+      "value": null
+    },
+    "W": {
+      "label": "总宽",
+      "value": null
+    },
+    "D": {
+      "label": "场地进深",
+      "value": null
+    },
+    "A": {
+      "label": "通道净宽",
+      "value": null
+    }
+  },
+  "materials": [
+    {
+      "name": "椭圆地台",
+      "detail": "象牙白平整台面，暖米色弧边"
+    },
+    {
+      "name": "开口弧门",
+      "detail": "象牙白哑光弧面，基材待确认"
+    },
+    {
+      "name": "右肩布幔",
+      "detail": "浅杏色布面，自右肩垂落成褶"
+    },
+    {
+      "name": "左侧地花",
+      "detail": "杏粉与暖白圆瓣花，搭配细长绿叶"
+    },
+    {
+      "name": "右侧花器",
+      "detail": "象牙色短圆柱，竖向细纹"
+    },
+    {
+      "name": "仪式通道",
+      "detail": "米白连续铺面，两侧细边线"
+    }
+  ],
+  "components": [
+    {
+      "name": "椭圆地台",
+      "prompt_detail": "独立呈现低矮的象牙白椭圆台面和暖米色围边。"
+    },
+    {
+      "name": "开口弧门",
+      "prompt_detail": "单独呈现象牙白圆弧门框，两脚落地，中间贯通。"
+    },
+    {
+      "name": "浅杏垂幔",
+      "prompt_detail": "保留布幔沿弧门右肩挂下的弯折轮廓、下摆和纵向褶纹。"
+    },
+    {
+      "name": "左侧地花",
+      "prompt_detail": "单独表现左侧偏高的簇花，杏粉圆花、暖白花和斜伸的橄榄绿细叶。"
+    },
+    {
+      "name": "圆柱花器",
+      "prompt_detail": "象牙色短圆柱花器，保留竖向细纹及器口上较低紧凑的暖杏花簇。"
+    },
+    {
+      "name": "米白通道",
+      "prompt_detail": "独立呈现米白色连续铺面，保留从正前方略俯视的透视收束与两条细边线。"
+    }
+  ],
+  "steps": [
+    {
+      "number": 1,
+      "name": "场地放样",
+      "description": "在空草坪上用虚线标出布置范围。",
+      "prompt_detail": "沿用后续步骤的低位正视角，只画空草坪和居中透视的虚线放样边界，四周留白。"
+    },
+    {
+      "number": 2,
+      "name": "安装弧门",
+      "description": "定位椭圆地台和后侧弧门。",
+      "prompt_detail": "场地放样后就位椭圆地台和象牙白开口弧门，画出可见轮廓。"
+    },
+    {
+      "number": 3,
+      "name": "悬挂布幔",
+      "description": "让浅杏布幔从弧门右肩自然垂落。",
+      "prompt_detail": "保留地台和弧门，增加沿右肩落下的浅杏色布幔与纵褶。"
+    },
+    {
+      "number": 4,
+      "name": "摆放花艺",
+      "description": "左侧摆地花，右侧摆圆柱花器。",
+      "prompt_detail": "保留地台、弧门、布幔，加入左侧偏高落地花簇及右侧带紧凑花束的象牙色圆柱花器。"
+    },
+    {
+      "number": 5,
+      "name": "铺设通道",
+      "description": "将米白铺面沿中轴接至地台。",
+      "prompt_detail": "以同样正面视角表现完成状态，增加地台前居中的米白色通道。"
+    }
+  ]
+}
